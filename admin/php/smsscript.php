@@ -7,7 +7,12 @@ function sendSMS($key, $to, $message, $originator) {
     return fread( $fp, 1024 );
 }
 // Example of use
-$response = sendSMS( '2fca4bd432a422', '08105474433', 'Testing the smstube api for sending sms and finding how to use it properly', 'tritons.org' );
+$response = sendSMS(
+    '2fca4bd432a422',
+    '08105474433',
+    'Testing the smstube api for sending sms and finding how to use it properly',
+    'tritons.org'
+);
 echo $response;
 ?>
 
