@@ -345,6 +345,91 @@ $brid = $_SESSION['brid'];
 
 
 
+                            <div id="editEntry" class="row" style="display: none" >
+                                <div class="row">
+
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-6">
+
+                                        <div class="alert alert-success collapse" id="successmsg1">
+                                            <strong>Successfull! </strong> Customer added to the database.
+                                        </div>
+                                        <div class="alert alert-danger collapse" id="dangermsg1">
+                                            <strong>Server Error!</strong> Server could not process your request, please try again.
+                                        </div>
+                                        <div class="alert alert-warning fadein collapse" id="errormsg1">
+                                            <strong>Error!</strong> Could not add customer to database <span id="errormessage"></span>.
+                                        </div>
+
+                                        <form id="entryform" method="POST" role="form" data-toggle="validator" onsubmit="return false;">
+
+                                            <div class="form-group">
+                                                <label for="cnum">Card Number*</label>
+                                                <div>
+                                                    <div class=" input-group margin-bottom-sm">
+                                                        <span class="input-group-addon"> <i class="fa fa-fw"></i></span>
+                                                        <input type="text" class="form-control" pattern=".{4,}" title="Minimum of 5 Characters required" id="cnum1" name="cnum1"  disabled>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group has-feedback">
+                                                <label for="name">Full Name*</label>
+                                                <div>
+                                                    <div class=" input-group margin-bottom-sm">
+                                                        <span class="input-group-addon"> <i class="fa fa-user  fa-fw"> </i></span>
+                                                        <input type="text" class="form-control" pattern=".{5,}" title="Minimum of 5 Characters required"  id="name1" name="name1" placeholder="Enter fullname of customer" required>
+                                                    </div>
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group has-feedback">
+                                                <label for="addr">Address</label>
+                                                <div>
+                                                    <div class=" input-group margin-bottom-sm">
+                                                        <span class="input-group-addon"> <i class="fa fa-home fa-fw"></i></span>
+                                                        <input type="text" class="form-control" pattern=".{4,}" title="Minimum of 5 Characters required" id="addr1" name="addr1" placeholder="Enter address of customer" required>
+                                                    </div>
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group has-feedback">
+                                                <label for="phone">Phone Number*</label>
+                                                <div>
+                                                    <div class=" input-group margin-bottom-sm">
+                                                        <span class="input-group-addon"> <i class="fa fa-mobile-phone fa-fw"></i></span>
+                                                        <input type="tel" class="form-control" title="Enter a valid Phone Number" id="phone1" name="phone1" pattern="(0[1-9]{1}[0-9]{9}|\+234[1-9]{1}[0-9]{9})" placeholder="+2349087654321" required>
+                                                    </div>
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" id="ignores1" name="ignores1">Cancel</button>
+                                                <button type="button" class="btn btn-primary" id="treaty1" name="treaty1">Submit</button>
+                                            </div>
+
+                                        </form>
+
+
+                                    </div>
+
+                                    <div class="col-sm-3"></div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+
 
                             <div class="content table-responsive" >
 
@@ -357,7 +442,8 @@ $brid = $_SESSION['brid'];
                                             <th>Card Number</th>
                                             <th>Customer Name</th>
                                             <th>Phone</th>
-                                            <th>Action</th>
+                                            <th>View</th>
+                                            <th>Edit</th>
                                         </tr>
                                         </thead>
 
@@ -395,11 +481,12 @@ else
                                                 if ($_SESSION['user'] == "ADMIN")
                                                 {
                                                     echo "<td> <button data-toggle=\"modal\" data-target=\"#view-modal\" data-id=\"".$row['cnum']."\" id=\"getUser1\" class=\"btn btn-sm btn-info\"> View</button> </td>";
+                                                    echo "<td> <button data-toggle=\"modal\"  data-id=\"".$row['cnum']."\" id=\"editUser1\" class=\"btn btn-sm btn-info\"> Edit</button> </td>";
                                                 }
                                                 else
                                                 {
                                                     echo "<td> <button data-toggle=\"modal\" data-target=\"#view-modal\" data-id=\"".$row['cnum']."\" id=\"getUser\" class=\"btn btn-sm btn-info\"> View</button> </td>";
-
+                                                    echo "<td> <button data-toggle=\"modal\"  data-id=\"".$row['cnum']."\" id=\"editUser\" class=\"btn btn-sm btn-info\"> Edit</button> </td>";
                                                 }
                                                 ?>
 
@@ -500,6 +587,7 @@ else
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" id="ignore" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="treat" name="treat"   data-dismiss="modal">Delete</button>
+
                 </div>
 
             </div>   </form>
@@ -516,10 +604,23 @@ else
         $(document).on('click', '#ignores', function(e) {
             $('#newEnt').show();
             $('#newEntry').hide();
+            $('#editEntry').hide();
 
             e.preventDefault();
         });
         })
+</script>
+
+<script>
+    $(document).ready(function(){
+        $(document).on('click', '#ignores1', function(e) {
+            $('#newEnt').show();
+            $('#newEntry').hide();
+            $('#editEntry').hide();
+
+            e.preventDefault();
+        });
+    })
 </script>
 
 <script>
@@ -607,15 +708,6 @@ else
                         $('#successmsg').fadeOut('fast');
                     }, 3000);
 
-                   // $('#entryform').get(0).reset();
-
-                    //$('#cnum').html("");
-                    //$('#name').html("");
-                    //$('#phone').html("");
-                    //$('#addr').html("");
-                    //$('#view-modal2').hide();
-                    //  window.location.reload(true);
-                    //location.reload(true);
 
                     swal({
                             title: "Successful !",
@@ -705,20 +797,21 @@ else
                         })
                         // console.log("hi22i");
 
-                        swal({
-                                title: "Delete Action Performed!",
-                                text: "A registered customer has been DELETED",
-                                showCancelButton: true,
-                                closeOnConfirm: false,
-                                showLoaderOnConfirm: true,
-                                html: true
-                                // imageUrl: "images/thumb.png"
-                            },
-                            function(){
-                                location.href="home.php" ;
-                            });
+                            .done(function (data) {
+                                swal({
+                                        title: "Delete Action Performed!",
+                                        text: "A registered customer has been DELETED",
+                                        showCancelButton: true,
+                                        closeOnConfirm: false,
+                                        showLoaderOnConfirm: true,
+                                        html: true
+                                        // imageUrl: "images/thumb.png"
+                                    },
+                                    function(){
+                                        location.href="home.php" ;
+                                    });
 
-
+                            })
 
                     });
                 })
@@ -779,18 +872,104 @@ else
                             data: formdata,
                             dataType: 'json'
                         })
-                        swal({
-                                title: "Delete Action Performed!",
-                                text: "A registered customer has been DELETED",
-                                showCancelButton: true,
-                                closeOnConfirm: false,
-                                showLoaderOnConfirm: true,
-                                html: true
-                                // imageUrl: "images/thumb.png"
-                            },
-                            function(){
-                                location.href="home.php" ;
-                            });
+                            .done(function(serverResponse) {
+                                swal({
+                                        title: "Delete Action Performed!",
+                                        text: "A registered customer has been DELETED",
+                                        showCancelButton: true,
+                                        closeOnConfirm: false,
+                                        showLoaderOnConfirm: true,
+                                        html: true
+                                        // imageUrl: "images/thumb.png"
+                                    },
+                                    function(){
+                                        location.href="home.php" ;
+                                    });
+
+
+                            })
+
+                    });
+                })
+                .fail(function(){
+                    $('.modal-body').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
+                });
+
+        });
+
+
+
+    });
+
+</script>
+
+
+<script>
+    $(document).ready(function(){
+        var formdata = "" ;
+        $(document).on('click', '#editUser', function(e){
+
+
+            $('#newEnt').hide();
+            $('#newEntry').hide();
+            $('#editEntry').show();
+            e.preventDefault();
+
+            var uid = $(this).data('id'); // get id of clicked row
+            console.log(uid);
+            console.log("inside script");
+
+         //   $('#dynamic-content').hide(); // hide dive for loader
+         //   $('#modal-loader').show();  // load ajax loader
+
+            $.ajax({
+                url: 'php/fillrec.php',
+                type: 'POST',
+                data: 'cnum='+uid,
+                dataType: 'json'
+            })
+                .done(function(data){
+                    console.log(data);
+
+                    document.getElementById("cnum1").value = data.cnum;
+                    document.getElementById("addr1").value = data.addr;
+                    document.getElementById("name1").value = data.name;
+                    document.getElementById("phone1").value = data.phone;
+
+                    console.log("Completed");
+                    $(document).on('click', '#treaty1', function(e){
+                        console.log("here") ; console.log(data) ;
+
+                        formdata = data;
+
+                        //   console.log("hii");
+                        //   console.log(formdata);
+
+                        $.ajax({
+                            url: 'updatecust.php',
+                            type: 'POST',
+                            data: formdata,
+                            dataType: 'json'
+                        })
+                        // console.log("hi22i");
+
+                            .done(function () {
+
+                                swal({
+                                        title: "Update Performed!",
+                                        text: "A registered customer has been UPDATED",
+                                        showCancelButton: true,
+                                        closeOnConfirm: false,
+                                        showLoaderOnConfirm: true,
+                                        html: true
+                                        // imageUrl: "images/thumb.png"
+                                    },
+                                    function(){
+                                        location.href="home.php" ;
+                                    });
+
+                            })
+
 
 
                     });
@@ -806,6 +985,8 @@ else
     });
 
 </script>
+
+
 
 
 
