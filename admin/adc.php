@@ -244,7 +244,22 @@ else
                             </div>
                             -->
 
+                            <?php
+                            if($_SESSION['user'] == "ADMIN")
+                            {
+                                echo "  <div class=\"row\">
+                                <hr>
+                                <div class=\"col-sm-5\"> </div>
+                                <div class=\" col-md-4 col-md-offset-4\">
+                         <a href=\"php/expphone.php\">  <button  id=\"newv\" name=\"newv\" class=\"btn  btn-primary\"> Export Phone Numbers</button> </a>
+                                </div>
+                            </div>";
+                            }
+                            ?>
+
                             <div class="content table-responsive" >
+
+
 
                                 <h5>Registered Customers</h5>
                                 <div id="chartActivity" class="ct-chart ">
@@ -675,7 +690,7 @@ else
             $('#modal-loader').show();  // load ajax loader
 
             $.ajax({
-                url: 'getcust.php',
+                url: 'getcust1.php',
                 type: 'POST',
                 data: 'cnum='+uid,
                 dataType: 'json'

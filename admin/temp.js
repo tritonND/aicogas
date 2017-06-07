@@ -4,7 +4,122 @@
  * and open the template in the editor.
  */
 
-<?php
+e.preventDefault();
+console.log("now here1");
+
+var cnum = $('#cnum').val();
+var name = $('#name').val();
+var phone = $('#phone').val();
+var addr = $('#addr').val();
+
+if (name==="" || phone==="" || addr ===""){
+    swal({
+        title: "Incomplete Entry",
+        text: "Fill empty Fields",
+        timer: 3000,
+        showConfirmButton: false
+    });
+}
+else{
+    var x = $.ajax({
+        type: "POST",
+        url: 'php/newEnt.php',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        //   data: "username="+encodeURIComponent(username)+"&password="+encodeURIComponent(password),
+        data: "addr=" + encodeURIComponent(addr) + "&cnum=" + encodeURIComponent(cnum) + "&name=" + encodeURIComponent(name) + "&phone=" + encodeURIComponent(phone),
+        dataType: "text"
+    });
+
+
+    x.done(function (serverResponse) {
+        console.log(serverResponse);
+        if (serverResponse.trim() == 'successful') {
+            console.log("Successful");
+            $('#successmsg').collapse('show');
+            setTimeout(function () {
+                $('#successmsg').fadeOut('fast');
+            }, 3000);
+
+
+            swal({
+                    title: "Successful !",
+                    text: "New Customer was registered Successfully",
+                    showCancelButton: false,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                    html: true
+                    // imageUrl: "images/thumb.png"
+                },
+                function () {
+                    location.href = "home.php";
+                });
+
+        }
+        else {
+            console.log("Error");
+            $('#errormsg').collapse('show');
+            // $('#basicinfoform')[0].reset();
+            setTimeout(function () {
+                $('#errormsg').fadeOut('fast');
+            }, 5000);
+        }
+        console.log("Completed");
+
+    })
+
+
+
+
+
+
+
+
+    //   console.log("hii");
+    //   console.log(formdata);
+
+    $.ajax({
+        url: 'php/updatecust.php',
+        type: 'POST',
+        data: formdata,
+        dataType: 'json'
+    })
+    // console.log("hi22i");
+
+        .done(function () {
+            console.log("update done");
+
+            swal({
+                    title: "Update Performed!",
+                    text: "A registered customer has been UPDATED",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                    html: true
+                    // imageUrl: "images/thumb.png"
+                },
+                function(){
+                    location.href="home.php" ;
+                });
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <?php
     session_start();
 header('Content-type: application/json; charset=UTF-8');
 

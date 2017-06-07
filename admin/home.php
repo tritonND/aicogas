@@ -25,7 +25,7 @@ $brid = $_SESSION['brid'];
 
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+   <!-- <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">  -->
     <script src="../dist/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../dist/sweetalert.css">
     <link href="../css/agency.css" rel="stylesheet">
@@ -236,7 +236,13 @@ $brid = $_SESSION['brid'];
                             <?php
                             if($_SESSION['user'] == "ADMIN")
                             {
-
+                                echo "  <div class=\"row\">
+                                <hr>
+                                <div class=\"col-sm-5\"> </div>
+                                <div class=\" col-md-4 col-md-offset-4\">
+                         <a href=\"php/expphone.php\">  <button  id=\"newv\" name=\"newv\" class=\"btn  btn-primary\"> Export All Phone Numbers</button> </a>
+                                </div>
+                            </div>";
                             }
                             else {
                                 echo "  <div class=\"row\">
@@ -481,7 +487,7 @@ else
                                                 if ($_SESSION['user'] == "ADMIN")
                                                 {
                                                     echo "<td> <button data-toggle=\"modal\" data-target=\"#view-modal\" data-id=\"".$row['cnum']."\" id=\"getUser1\" class=\"btn btn-sm btn-info\"> View</button> </td>";
-                                                    echo "<td> <button data-toggle=\"modal\"  data-id=\"".$row['cnum']."\" id=\"editUser1\" class=\"btn btn-sm btn-info\"> Edit</button> </td>";
+                                                    echo "<td> <button data-toggle=\"modal\"  data-id=\"".$row['cnum']."\" id=\"editUser\" class=\"btn btn-sm btn-info\"> Edit</button> </td>";
                                                 }
                                                 else
                                                 {
@@ -633,7 +639,7 @@ else
             e.preventDefault();
 
             //   var uid = $(this).data('id'); // get id of clicked row
-            console.log("clicked new entry button");
+           // console.log("clicked new entry button");
             var x = $.ajax({
                 type: "POST",
                 url: "php/custid.php",
@@ -644,9 +650,9 @@ else
             });
 
             x.done(function(serverResponse){
-                console.log(serverResponse);
+             //   console.log(serverResponse);
                 $('#cnum').val(serverResponse.trim());
-                console.log("Completed");
+             //   console.log("Completed");
 
             })
 
@@ -673,7 +679,7 @@ else
         $(document).on('click', '#treaty', function(e) {
 
             e.preventDefault();
-            console.log("now here1");
+          //  console.log("now here1");
 
             var cnum = $('#cnum').val();
             var name = $('#name').val();
@@ -700,9 +706,9 @@ else
 
 
             x.done(function (serverResponse) {
-                console.log(serverResponse);
+                //console.log(serverResponse);
                 if (serverResponse.trim() == 'successful') {
-                    console.log("Successful");
+                    //console.log("Successful");
                     $('#successmsg').collapse('show');
                     setTimeout(function () {
                         $('#successmsg').fadeOut('fast');
@@ -724,14 +730,14 @@ else
 
                 }
                 else {
-                    console.log("Error");
+                    //console.log("Error");
                     $('#errormsg').collapse('show');
                     // $('#basicinfoform')[0].reset();
                     setTimeout(function () {
                         $('#errormsg').fadeOut('fast');
                     }, 5000);
                 }
-                console.log("Completed");
+                //console.log("Completed");
 
             })
 
@@ -769,7 +775,7 @@ else
                 dataType: 'json'
             })
                 .done(function(data){
-                    console.log(data);
+                    //console.log(data);
                     $('#dynamic-content').hide(); // hide dynamic div
                     $('#dynamic-content').show(); // show dynamic div
                     $('#txt_fname').html(data.name);
@@ -780,9 +786,9 @@ else
                     //$('#txt_office').html(data.FilePath);
                     $('#modal-loader').hide();    // hide ajax loader
 
-                    console.log("Completed");
+                    //console.log("Completed");
                     $(document).on('click', '#treat', function(e){
-                        console.log("here") ; console.log(data) ;
+                        //console.log("here") ; //console.log(data) ;
 
                         formdata = data;
 
@@ -849,7 +855,7 @@ else
                 dataType: 'json'
             })
                 .done(function(data){
-                    console.log(data);
+                    //console.log(data);
                     //$('#modalid').html("");
                     $('#dynamic-content').hide(); // hide dynamic div
                     $('#dynamic-content').show(); // show dynamic div
@@ -861,9 +867,9 @@ else
                     //$('#txt_office').html(data.FilePath);
                     $('#modal-loader').hide();    // hide ajax loader
 
-                    console.log("Completed");
+                    //console.log("Completed");
                     $(document).on('click', '#treat', function(e){
-                        console.log("here") ; console.log(data) ;
+                        //console.log("here") ; console.log(data) ;
 
                         formdata = data;
                         $.ajax({
@@ -916,8 +922,8 @@ else
             e.preventDefault();
 
             var uid = $(this).data('id'); // get id of clicked row
-            console.log(uid);
-            console.log("inside script");
+            //console.log(uid);
+            //console.log("inside script");
 
          //   $('#dynamic-content').hide(); // hide dive for loader
          //   $('#modal-loader').show();  // load ajax loader
@@ -929,50 +935,84 @@ else
                 dataType: 'json'
             })
                 .done(function(data){
-                    console.log(data);
+                    //console.log(data);
 
                     document.getElementById("cnum1").value = data.cnum;
                     document.getElementById("addr1").value = data.addr;
                     document.getElementById("name1").value = data.name;
                     document.getElementById("phone1").value = data.phone;
 
-                    console.log("Completed");
+                    //console.log("Completed");
                     $(document).on('click', '#treaty1', function(e){
-                        console.log("here") ; console.log(data) ;
+                        //console.log("here") ; //console.log(data) ;
 
-                        formdata = data;
+                       // formdata = data;
 
-                        //   console.log("hii");
-                        //   console.log(formdata);
+                        e.preventDefault();
+                        //console.log("now here1");
 
-                        $.ajax({
-                            url: 'updatecust.php',
-                            type: 'POST',
-                            data: formdata,
-                            dataType: 'json'
-                        })
-                        // console.log("hi22i");
+                        var cnum = $('#cnum1').val();
+                        var name = $('#name1').val();
+                        var phone = $('#phone1').val();
+                        var addr = $('#addr1').val();
 
-                            .done(function () {
+                        //console.log(cnum+" " +name+" "+phone+" "+addr);
 
-                                swal({
-                                        title: "Update Performed!",
-                                        text: "A registered customer has been UPDATED",
-                                        showCancelButton: true,
-                                        closeOnConfirm: false,
-                                        showLoaderOnConfirm: true,
-                                        html: true
-                                        // imageUrl: "images/thumb.png"
-                                    },
-                                    function(){
-                                        location.href="home.php" ;
-                                    });
+                        if (name1==="" || phone1==="" || addr1 ===""){
+                            swal({
+                                title: "Incomplete Entry",
+                                text: "Fill empty Fields",
+                                timer: 3000,
+                                showConfirmButton: false
+                            });
+                        }
 
-                            })
+                        else{
+                            var x = $.ajax({
+                                type: "POST",
+                                url: 'php/updatecust.php',
+                                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                                data: "addr1=" + encodeURIComponent(addr) + "&cnum1=" + encodeURIComponent(cnum) + "&name1=" + encodeURIComponent(name) + "&phone1=" + encodeURIComponent(phone),
+                                dataType: "text"
+                            });
+
+                            x.done(function (serverResponse) {
+                                //console.log(serverResponse);
+                                if (serverResponse.trim() == 'successful') {
+                                    //console.log("Successful");
+                                    $('#successmsg').collapse('show');
+                                    setTimeout(function () {
+                                        $('#successmsg').fadeOut('fast');
+                                    }, 3000);
 
 
+                                    swal({
+                                            title: "Successful !",
+                                            text: "Customer Record was Succesfully updated",
+                                            showCancelButton: false,
+                                            closeOnConfirm: false,
+                                            showLoaderOnConfirm: true,
+                                            html: true
+                                            // imageUrl: "images/thumb.png"
+                                        },
+                                        function () {
+                                            location.href = "home.php";
+                                        });
 
-                    });
+                                }
+                                else {
+                                    //console.log("Error");
+                                    $('#errormsg').collapse('show');
+                                    // $('#basicinfoform')[0].reset();
+                                    setTimeout(function () {
+                                        $('#errormsg').fadeOut('fast');
+                                    }, 5000);
+                                }
+                                //console.log("Completed");
+
+                            }) }
+
+                        });
                 })
                 .fail(function(){
                     $('.modal-body').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
