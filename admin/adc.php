@@ -251,7 +251,7 @@ else
                                 <hr>
                                 <div class=\"col-sm-5\"> </div>
                                 <div class=\" col-md-4 col-md-offset-4\">
-                         <a href=\"php/expphone.php\">  <button  id=\"newv\" name=\"newv\" class=\"btn  btn-primary\"> Export Phone Numbers</button> </a>
+                         <a href=\"php/adphone.php\">  <button  id=\"newv\" name=\"newv\" class=\"btn  btn-primary\"> Export Phone Numbers</button> </a>
                                 </div>
                             </div>";
                             }
